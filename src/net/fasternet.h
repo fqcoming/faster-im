@@ -1,5 +1,6 @@
-#ifndef __FASTER_IM__
-#define __FASTER_IM__
+#ifndef __FASTERNET__
+#define __FASTERNET__
+
 
 #include <iostream>
 #include <stdio.h>
@@ -22,6 +23,21 @@
 
 #include "ypipe.hpp"
 #include "public.h"
+
+
+
+#define ENTRIES_LENGTH		4096
+#define MAX_CONNECTIONS		1024
+#define BUFFER_LENGTH		1024
+#define QUEUE_CHUNK_SIZE    100
+
+
+enum {
+	READ = 1, WRITE = 2, ACCEPT = 4, UNKNOWN = 0
+};
+
+
+
 
 
 struct faster_tcp_conn_t {
