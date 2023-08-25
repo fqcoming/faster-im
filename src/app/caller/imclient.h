@@ -5,7 +5,7 @@
 class FasterIMClient
 {
 public:
-
+    
 
 
 
@@ -13,7 +13,7 @@ public:
 private:
 
 
-}
+};
 
 
 #endif
