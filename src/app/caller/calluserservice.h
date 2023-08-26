@@ -12,30 +12,24 @@
 
 
 
-
-
-
-
-
 class UserServiceCaller
 {
 public:
     UserServiceCaller(::google::protobuf::RpcChannel* channel) : stub(channel) {}
-    bool createConn();
 
     bool Login(int userid, std::string pwd);
-    bool Register(uint32_t id, std::string name, std::string pwd);
-    bool Logout();
+    bool Register(std::string name, std::string pwd);
+    bool Logout(int userid);
     
-    bool OneChat();
+    bool OneChat(int friendid, string message);
     bool AddFriend();
 
     bool CreateGroup();
-    bool AddGroup();
-    bool GroupChat();
+    bool AddGroup(int userid, int groupid);
+    bool GroupChat(int userid, int groupid, string message);
 
 private:
-    faster::UserServiceRpc_Stub stub;
+    faster::UserServiceRpc_Stub* stub;
 };
 
 

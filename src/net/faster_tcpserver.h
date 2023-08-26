@@ -22,7 +22,9 @@
 #include <unistd.h>
 
 #include "ypipe.hpp"
-#include "public.h"
+#include "faster_threadpool.h"
+#include "faster_connpool.h"
+
 
 
 
@@ -32,57 +34,8 @@
 #define QUEUE_CHUNK_SIZE    100
 
 
-enum {
-	READ = 1, WRITE = 2, ACCEPT = 4, UNKNOWN = 0
-};
 
 
-
-
-
-struct faster_tcp_conn_t {
-	struct sockaddr_in clientaddr;
-	socklen_t clilen;
-	int connfd;
-    faster_tcp_conn_t() : clilen(sizeof(struct sockaddr_in)) {}
-};
-
-struct faster_tcp_event_t {
-	int evtype;
-	char evbuf[1024];
-	int len;
-	faster_tcp_conn_t* conn;
-	faster_tcp_event_t() : evtype(UNKNOWN), len(0), conn(nullptr) {}
-};
-
-
-ypipe_t<faster_tcp_event_t*, QUEUE_CHUNK_SIZE> recv_event_que;
-std::mutex ypipe_mutex;
-std::condition_variable ypipe_cond;
-
-
-void OnMessage(faster_tcp_event_t* ev) {
-
-    
-
-
-
-}
-
-
-
-void *yqueue_consumer_thread_condition(void *argv) {
-	while (true) {
-		faster_tcp_event_t *value;
-		if (recv_event_que.read(&value)) {
-            OnMessage(value);
-		} else {
-			std::unique_lock<std::mutex> lock(ypipe_mutex);
-			ypipe_cond.wait(lock);
-		}
-	}
-	return NULL;
-}
 
 
 struct faster_tcp_conn_pool_t {
@@ -111,7 +64,31 @@ struct faster_tcp_conn_pool_t {
 
 
 
+class FasterTcpServer {
+public:
+	FasterTcpServer() = default;
 
+	// prepare before loop: 
+	// connpool + lock-free queue + threadpool
+	void init(int conn_num = 1024);
+	
+	// loop after init
+	void startLoop();
+
+private:
+	bool start_listen();
+
+	void set_accept_event(faster_tcp_event_t* ev, unsigned flags);
+	void set_write_event(faster_tcp_event_t* ev, int flags);
+	void set_read_event(faster_tcp_event_t* ev, int flags);
+
+private:
+	struct io_uring        _ring;
+	faster_conn_t      _listen_conn;
+	faster_conn_pool_t _conn_pool;
+
+	FasterThreadPool _threadpool;
+};
 
 
 

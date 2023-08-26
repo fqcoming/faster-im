@@ -7,12 +7,12 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <errno.h>
+#include <sys/epoll.h>
 
+#include "user.pb.h"
 #include "rpcchannel.h"
 #include "rpccontroller.h"
 #include "zookeeperutil.h"
-
-
 
 
 
@@ -190,6 +190,127 @@ void FasterRpcChannel::endConnWithProvider(std::string service_name, int clientf
 
 
 
+void FasterRpcChannel::startRecvThread() {
+    // Successfully connected to the server, starting the receive sub thread
+    std::thread readTask(std::bind(readTaskHandler, this));   // pthread_create
+    readTask.detach();                                    // pthread_detach
+}
+
+
+
+
+void FasterRpcChannel::readTaskHandler() {
+
+    epfd = epoll_create(1);
+    struct epoll_event ev, events[EVENTS_LENGTH];
+
+    auto it = std::unordered_map<std::string, int>::iterator;
+    for (it = _serviceToConn.begin(); it != _serviceToConn.end(); ++it) {
+        ev.events = EPOLLIN;
+        ev.data.fd = it->second;
+        epoll_ctl(epfd, EPOLL_CTL_ADD, it->second, &ev);
+    }
+
+    char buffer[BUFFER_LENGTH];
+
+    for (;;) {
+        int nready = epoll_wait(epfd, events, EVENTS_LENGTH, -1); // -1, ms 
+		int i = 0;
+
+		for (i = 0; i < nready; i++) {
+			int clientfd = events[i].data.fd;
+			if (listenfd == clientfd) { // accept
+
+                // ignore
+                // For the client, if listening is not enabled, no listening events should occur.
+
+			} else if (events[i].events & EPOLLIN) { //clientfd
+
+                memset(buffer, 0, BUFFER_LENGTH);
+				int n = recv(clientfd, buffer, BUFFER_LENGTH - 1, 0);
+
+				if (n > 0) {
+
+                    // Receive data and perform relevant actions
+                    procRecvMessage(std::string(buffer, n));
+					
+				} else if (n == 0) {
+
+					ev.events = EPOLLIN;
+					ev.data.fd = clientfd;
+					epoll_ctl(epfd, EPOLL_CTL_DEL, clientfd, &ev);
+					close(clientfd);
+
+				} else {
+                    // +++
+                }
+				
+			} else if (events[i].events & EPOLLOUT) {
+
+                // For the client, the send data operation calls send() in the main thread.
+
+			}
+
+		} // for
+    } // for 
+}
+
+
+void FasterRpcChannel::procRecvMessage(std::string message) {
+
+    uint32_t header_size = 0;
+    message.copy((char*)&header_size, sizeof(uint32_t), 0);
+
+    std::string rpc_header_str = message.substr(sizeof(u_int32_t), header_size);
+    faster::RpcHeader rpcHeader;
+
+    std::string service_name;
+    std::string method_name;
+    uint32_t args_size;
+
+    if (rpcHeader.ParseFromString(rpc_header_str)) {
+
+        // Data header deserialization successful.
+        service_name = rpcHeader.service_name();
+        method_name = rpcHeader.method_name();
+        args_size = rpcHeader.args_size();
+
+    } else {
+
+        // Data header deserialization failed
+        std::cout << "rpc_header_str parse error!" << std::endl;
+        return;
+        
+    }
+
+    std::string args_str = message.substr(sizeof(uint32_t) + header_size, args_size);
+
+    if (service_name == "UserServiceRpc") {
+
+        if (method_name == "OneChat") {
+
+            faster::OneChatRequest request;
+            if(!request.ParseFromString(args_str)) {
+                std::cout << "OneChat request parse error, content:" << args_str << std::endl;
+                return;
+            }
+            std::cout << "[" << request.userid() << "]: " << request.msg << std::endl;
+
+        } else if (method_name == "GroupChat") {
+
+            faster::GroupChatRequest request;
+            if(!request.ParseFromString(args_str)) {
+                std::cout << "GroupChat request parse error, content:" << args_str << std::endl;
+                return;
+            }
+            std::cout << "[" << request.groupid() << "-" << request.userid() << "]: " << request.msg << std::endl;
+
+        } else {
+
+            std::cout << "Received message with undefined behavior." << std::endl;
+        }
+    }
+}
 
 
 

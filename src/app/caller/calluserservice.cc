@@ -30,5 +30,3 @@ bool UserServiceCaller::Login(int userid, std::string pwd)
 
 
 
-
-

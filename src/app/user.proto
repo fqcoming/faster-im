@@ -56,7 +56,9 @@ message LogoutResponse
 message OneChatRequest 
 {
     uint64 userid = 1;
-    uint64 friendid = 2;
+    bytes username = 2;
+    uint64 friendid = 3;
+    bytes msg = 4;
 }
 
 
