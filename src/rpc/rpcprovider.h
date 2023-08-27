@@ -29,8 +29,8 @@ private:
     // Established connection user's read write message event callback
     void OnMessage(faster_event_t* event);
 
-    // Closure的回调操作，用于序列化rpc的响应和网络发送
-    void SendRpcResponse(const muduo::net::TcpConnectionPtr&, google::protobuf::Message*);
+    // Closure callback operation, used to serialize rpc response and network sending
+    void SendRpcResponse(faster_event_t* event, google::protobuf::Message* response);
 
 
 private:

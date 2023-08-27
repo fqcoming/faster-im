@@ -123,10 +123,16 @@ void FasterTcpServer::startLoop() {
 }
 
 
+void FasterTcpServer::sendMessage(faster_event_t* event) {
+	set_write_event(event, 0);
+}
+
+
 
 void FasterTcpServer::set_accept_event(faster_event_t* ev, int flags) {
 	struct io_uring_sqe *sqe = io_uring_get_sqe(&_ring);
-	io_uring_prep_accept(sqe, ev->conn->connfd, (struct sockaddr*)&ev->conn->clientaddr, (socklen_t*)&ev->conn->clientlen, flags);
+	io_uring_prep_accept(sqe, ev->conn->connfd, (struct sockaddr*)&ev->conn->clientaddr, 
+			(socklen_t*)&ev->conn->clientlen, flags);
 	memcpy(&sqe->user_data, &ev, sizeof(faster_event_t*));
 }
 

@@ -159,29 +159,28 @@ void RpcProvider::OnMessage(faster_event_t* event)
     google::protobuf::Message *response = service->GetResponsePrototype(method).New();
 
     // Bind a Closure callback function to the following CallMethod.
+    // SendRpcResponse: Mainly used to send rpc responses
     google::protobuf::Closure *done = 
-        google::protobuf::NewCallback<RpcProvider, const muduo::net::TcpConnectionPtr&, google::protobuf::Message*>
-            (this, &RpcProvider::SendRpcResponse, conn, response);
+        google::protobuf::NewCallback<RpcProvider, faster_event_t*, google::protobuf::Message*>
+            (this, &RpcProvider::SendRpcResponse, event, response);
 
-
-
-    // 在框架上根据远端rpc请求，调用当前rpc节点上发布的方法
     // new UserService().Login(controller, request, response, done)
     service->CallMethod(method, nullptr, request, response, done);
 }
 
-// Closure的回调操作，用于序列化rpc的响应和网络发送
-void RpcProvider::SendRpcResponse(const muduo::net::TcpConnectionPtr& conn, google::protobuf::Message *response)
-{
+
+
+
+void RpcProvider::SendRpcResponse(faster_event_t* event, 
+                                google::protobuf::Message *response) {
     std::string response_str;
-    if (response->SerializeToString(&response_str)) // response进行序列化
-    {
-        // 序列化成功后，通过网络把rpc方法执行的结果发送会rpc的调用方
-        conn->send(response_str);
-    }
-    else
-    {
+    if (response->SerializeToString(&response_str)) {
+
+        memcpy(event->evbuf, &response_str, response_str.size());
+        event->size = response_str.size();
+        _tcpServer->sendMessage(event);
+
+    } else {
         std::cout << "serialize response_str error!" << std::endl; 
     }
-    conn->shutdown(); // 模拟http的短链接服务，由rpcprovider主动断开连接
 }
