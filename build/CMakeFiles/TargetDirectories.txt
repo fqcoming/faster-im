@@ -1,0 +1,6 @@
+/home/zm22/faster-im/build/CMakeFiles/edit_cache.dir
+/home/zm22/faster-im/build/CMakeFiles/rebuild_cache.dir
+/home/zm22/faster-im/build/src/CMakeFiles/edit_cache.dir
+/home/zm22/faster-im/build/src/CMakeFiles/rebuild_cache.dir
+/home/zm22/faster-im/build/src/core/CMakeFiles/edit_cache.dir
+/home/zm22/faster-im/build/src/core/CMakeFiles/rebuild_cache.dir

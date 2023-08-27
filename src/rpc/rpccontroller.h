@@ -1,9 +1,10 @@
-#pragma once
-
-
+#ifndef __RPC_CONTROLLER_H__
+#define __RPC_CONTROLLER_H__
 
 #include <google/protobuf/service.h>
 #include <string>
+
+
 
 class FasterRpcController : public google::protobuf::RpcController
 {
@@ -33,3 +34,4 @@ private:
 
 
 
+#endif

@@ -19,14 +19,14 @@ public:
     void NotifyService(google::protobuf::Service *service);
 
     // Start the rpc service node and start providing rpc services.
-    void Run(std::string serverIp, uint16_t serverPort);
+    void Run(std::string serverIp, uint16_t serverPort, std::string zkIp, uint16_t zkPort);
 
 
 private:
 
     void OnConnection(faster_event_t* event);
 
-    // Established connection user's read write event callback
+    // Established connection user's read write message event callback
     void OnMessage(faster_event_t* event);
 
     // Closure的回调操作，用于序列化rpc的响应和网络发送
@@ -36,7 +36,7 @@ private:
 private:
 
     ZkClient _zkClient;
-    FasterTcpServer* _tcpserver;
+    FasterTcpServer* _tcpServer;
 
     struct ServiceInfo
     {
@@ -47,13 +47,6 @@ private:
     // Store all information about successfully registered service objects and their service methods
     std::unordered_map<std::string, ServiceInfo> _serviceMap;
 };
-
-
-
-
-
-
-
 
 
 

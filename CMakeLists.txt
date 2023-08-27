@@ -1,22 +1,22 @@
-# 设置cmake的最低版本和项目名称
+
 cmake_minimum_required(VERSION 3.0)
 project(faster-im)
 
-# 生成debug版本，可以进行gdb调试
 set(CMAKE_BUILD_TYPE "Debug")
 
-# 设置项目可执行文件输出的路径
+# Set the path for project executable file output
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-# 设置项目库文件输出的路径
+
+# Set the path for project library file output
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-# 设置项目编译头文件搜索路径 -I
+# Set the search path for project compilation header files: -I
 include_directories(${PROJECT_SOURCE_DIR}/src/include)
 include_directories(${PROJECT_SOURCE_DIR}/example)
-# 设置项目库文件搜索路径 -L
+
+# Set the search path for project library files: -L
 link_directories(${PROJECT_SOURCE_DIR}/lib)
 
-# src包含了mprpc框架所有的相关代码
+# src contains all the code for distributed IM projects
 add_subdirectory(src)
-# example包含了mprpc框架使用的示例代码
-add_subdirectory(example)
+

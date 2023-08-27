@@ -1,6 +1,9 @@
 #!/bin/bash
 
+# If the command execution fails, 
+# immediately stop executing the entire script.
 set -e
+
 
 if [ ! -d `pwd`/build ]; then
     mkdir `pwd`/build
@@ -11,4 +14,3 @@ cd `pwd`/build &&
 	cmake .. &&
 	make
 cd ..
-cp -r `pwd`/src/include `pwd`/lib

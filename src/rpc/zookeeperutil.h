@@ -1,25 +1,28 @@
 #ifndef __ZOOKEEPER_UTIL_H__
 #define __ZOOKEEPER_UTIL_H__
 
-#include <semaphore.h>
 #include <zookeeper/zookeeper.h>
 #include <string>
 
-// 封装的zk客户端类
+
 class ZkClient
 {
 public:
     ZkClient();
     ~ZkClient();
-    // zkclient启动连接zkserver
+
+    // zkclient starts connecting to zkserver and establishes a session.
     void Start(std::string zkIp, uint16_t zkPort);
-    // 在zkserver上根据指定的path创建znode节点, state=0表示默认创建永久性节点
-    void Create(const char *path, const char *data, int datalen, int state=0);
-    // 根据参数指定的znode节点路径，或者znode节点的值
-    std::string GetData(const char *path);
+
+    // Create a znode on zkserver based on the specified path, 
+    // with state=0 indicating the default creation of a permanent node.
+    void Create(const char *path, const char *data, int datalen, int state = 0);
+
+    // Obtain znode data based on the path.
+    std::string GetData(const char* path);
+
 private:
-    // zk的客户端句柄
-    zhandle_t *m_zhandle;
+    zhandle_t* _zkhandle;
 };
 
 
