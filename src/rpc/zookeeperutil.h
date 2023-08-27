@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __ZOOKEEPER_UTIL_H__
+#define __ZOOKEEPER_UTIL_H__
 
 #include <semaphore.h>
 #include <zookeeper/zookeeper.h>
@@ -20,3 +21,6 @@ private:
     // zk的客户端句柄
     zhandle_t *m_zhandle;
 };
+
+
+#endif

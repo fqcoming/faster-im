@@ -1,39 +1,62 @@
 
-
-#include "fasternet.h"
-
-
-// 先假定同一个连接对于发送数据，是按提交顺序执行的吗？不一定
-// 提交时间之后，失败一定会收到通知吗？这里涉及到收发数据缓冲区回收时机。
+#include "faster_tcpserver.h"
 
 
+FasterTcpServer::FasterTcpServer() {
+
+}
+
+
+
+FasterTcpServer::~FasterTcpServer() {
+
+	delete _listenConn;
+	delete _acceptEvent;
+
+}
 
 
 // prepare before loop
-void FasterTcpServer::init(int conn_num = 1024) {
-	_conn_pool.init_conn_pool(1024);
+bool FasterTcpServer::init(std::string ip, short port) {
+
+	// init uring
+	struct io_uring_params params;
+	memset(&params, 0, sizeof(params));
+	io_uring_queue_init_params(ENTRIES_LENGTH, &_ring, &params);
+
+	// start listen
+
+	int listenfd = socket(AF_INET, SOCK_STREAM, 0);  
+	if (listenfd == -1) {
+		std::cerr << "listenfd socket() failed." << std::endl;
+		return false;
+	}
+
+	struct sockaddr_in servaddr;
+	servaddr.sin_family = AF_INET;
+	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+	servaddr.sin_port = htons(port);
+	if (-1 == bind(listenfd, (struct sockaddr*)&servaddr, sizeof(servaddr))) {
+		std::cerr << "listenfd bind() failed." << std::endl;
+		return false;
+	}
+
+	listen(listenfd, 100);
+
+	_listenConn = new faster_conn_t();
+	_acceptEvent = new faster_event_t();
+
+	_listenConn->connfd = listenfd;
+	_acceptEvent->evtype = ACCEPT_EV;
+	_acceptEvent->conn = _listenConn;
+
+	set_accept_event(_acceptEvent, 0);
 }
 	
 
 
-
 // loop after prepare
 void FasterTcpServer::startLoop() {
-	if(!start_listen()) {
-		std::cout << "listen failed." << std::endl;
-		exit(-1);
-	}
-	struct io_uring_params params;
-	memset(&params, 0, sizeof(params));
-
-	// struct io_uring ring;
-	io_uring_queue_init_params(ENTRIES_LENGTH, &_ring, &params);
-
-
-	faster_tcp_event_t* accept_ev = new faster_tcp_event_t();
-	accept_ev->evtype = ACCEPT;
-	accept_ev->conn = &_listen_conn;
-	set_accept_event(accept_ev, 0);
 
 	for ( ; ; ) {
 		struct io_uring_cqe *cqe;
@@ -49,95 +72,74 @@ void FasterTcpServer::startLoop() {
 		for (i = 0; i < cqecount; i++) {
 
 			cqe = cqes[i];
-			count ++;
-			faster_tcp_event_t* ev = (faster_tcp_event_t*)cqe->user_data;
+			count++;
+			faster_event_t* ev = (faster_event_t*)cqe->user_data;
 
-			if (ev->evtype == ACCEPT) {
+			if (ev->evtype == ACCEPT_EV) {
 
 				int connfd = cqe->res;
-				faster_tcp_conn_t* newconn = _conn_pool.get_one_free_conn();
-				
-				newconn->connfd = connfd;
-				faster_tcp_event_t* newev = new faster_tcp_event_t();
 
+				faster_conn_t* newconn = _connpool->getOneFreeConn();
+				newconn->connfd = connfd;
+
+				faster_event_t* newev = _eventpool->getOneFreeEvent();
 				newev->conn = newconn;
-				newev->evtype = READ;
-				memset(newev->evbuf, 0, 1024);
+				newev->evtype = READ_EV;
+				memset(newev->evbuf, 0, newev->capacity);
 
 				set_read_event(newev, 0);
 				set_accept_event(ev, 0);
 
-			} else if (ev->evtype == READ) {
+			} else if (ev->evtype == READ_EV) {
 
 				int bytes_read = cqe->res;
 				if (bytes_read == 0) {
+
 					close(ev->conn->connfd);
-					_conn_pool.recyle_one_conn(ev->conn);
-					delete ev;
+					_connpool->freeOneUsedConn(ev->conn);
+					_eventpool->freeOneUsedEvent(ev);
 
 				} else if (bytes_read < 0) {
 
 					
 				} else {
+					_threadpool->addEvent(ev);
 
-					recv_event_que.write(ev, false);
-					
-					if (!recv_event_que.flush()) {
-						std::unique_lock<std::mutex> lock(ypipe_mutex);
-						ypipe_cond.notify_one();
-					}
-
-					faster_tcp_event_t* newev = new faster_tcp_event_t();
-
+					faster_event_t* newev = _eventpool->getOneFreeEvent();
 					newev->conn = ev->conn;
-					newev->evtype = READ;
-					memset(newev->evbuf, 0, 1024);
-
+					newev->evtype = READ_EV;
+					memset(newev->evbuf, 0, newev->capacity);
 					set_read_event(newev, 0);
 				}
-			} else if (ev->evtype == WRITE) {
-				delete ev;
+			} else if (ev->evtype == WRITE_EV) {
+
+				_eventpool->freeOneUsedEvent(ev);
+
 			}
 		}
+
 		io_uring_cq_advance(&_ring, count);
 	} // for
 }
 
 
 
-bool FasterTcpServer::start_listen() {
-	int listenfd = socket(AF_INET, SOCK_STREAM, 0);  
-	if (listenfd == -1) return false;
-
-	struct sockaddr_in servaddr;
-	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	servaddr.sin_port = htons(9999);
-	if (-1 == bind(listenfd, (struct sockaddr*)&servaddr, sizeof(servaddr))) {
-			return false;
-	}
-
-	listen(listenfd, 10);
-	_listen_conn.connfd = listenfd;
-	return true;
-}
-
-void FasterTcpServer::set_accept_event(faster_tcp_event_t* ev, unsigned flags) {
+void FasterTcpServer::set_accept_event(faster_event_t* ev, int flags) {
 	struct io_uring_sqe *sqe = io_uring_get_sqe(&_ring);
-	io_uring_prep_accept(sqe, ev->conn->connfd, (struct sockaddr*)&ev->conn->clientaddr, (socklen_t*)&ev->conn->clilen, flags);
-	memcpy(&sqe->user_data, &ev, sizeof(faster_tcp_event_t*));
+	io_uring_prep_accept(sqe, ev->conn->connfd, (struct sockaddr*)&ev->conn->clientaddr, (socklen_t*)&ev->conn->clientlen, flags);
+	memcpy(&sqe->user_data, &ev, sizeof(faster_event_t*));
 }
 
-void FasterTcpServer::set_write_event(faster_tcp_event_t* ev, int flags) {
+void FasterTcpServer::set_write_event(faster_event_t* ev, int flags) {
 	struct io_uring_sqe *sqe = io_uring_get_sqe(&_ring);
 	io_uring_prep_send(sqe, ev->conn->connfd, ev->evbuf, BUFFER_LENGTH, flags);
-	memcpy(&sqe->user_data, &ev, sizeof(faster_tcp_event_t*));
+	memcpy(&sqe->user_data, &ev, sizeof(faster_event_t*));
 }
 
-void FasterTcpServer::set_read_event(faster_tcp_event_t* ev, int flags) {
+void FasterTcpServer::set_read_event(faster_event_t* ev, int flags) {
 	struct io_uring_sqe *sqe = io_uring_get_sqe(&_ring);
 	io_uring_prep_recv(sqe, ev->conn->connfd, ev->evbuf, BUFFER_LENGTH, flags);
-	memcpy(&sqe->user_data, &ev, sizeof(faster_tcp_event_t*));
+	memcpy(&sqe->user_data, &ev, sizeof(faster_event_t*));
 }
 
 
@@ -146,11 +148,10 @@ void FasterTcpServer::set_read_event(faster_tcp_event_t* ev, int flags) {
 
 
 
-
+#if 0  // TEST AND DEBUG
 
 int main() {
 
-    // 首先先开启一个线程用于处理消息队列信息
     pthread_t tid;
     int ret = pthread_create(&tid, NULL, yqueue_consumer_thread_condition, NULL);
 	
@@ -161,7 +162,7 @@ int main() {
 
 
 
-
+#endif
 
 
 

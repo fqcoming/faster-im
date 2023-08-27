@@ -1,62 +1,44 @@
 #ifndef __FASTER_CONN_POOL_H__
 #define __FASTER_CONN_POOL_H__
 
-
+#include <list>
+#include <unordered_map>
 #include <netinet/in.h>
 #include <sys/socket.h>
 
 
-enum {
-	READ    = 1, 
-    WRITE   = 2, 
-    ACCEPT  = 3, 
-    UNKNOWN = 0
-};
 
 
 struct faster_conn_t {
-
+	uint64_t seq;    // Used to establish consistency with events
 	struct sockaddr_in clientaddr;
 	socklen_t clientlen;
 	int connfd;
-
-    faster_conn_t() : clientlen(sizeof(struct sockaddr_in)), connfd(-1) {}
+    faster_conn_t() : seq(0), clientlen(sizeof(struct sockaddr_in)), connfd(-1) {}
 };
 
 
-struct faster_event_t {
-    faster_event_t() : evtype(UNKNOWN), len(0), conn(nullptr) {}
+class FasterConnPool 
+{
+public:
+	FasterConnPool();
+	~FasterConnPool();
 
-	int evtype;
-	char evbuf[1024];
-	int len;
-	faster_conn_t* conn;
-};
+	void initConnPool(int numConn);
+	faster_conn_t* getOneFreeConn();
+	void freeOneUsedConn(faster_conn_t* conn);
 
+	void printUsedAndFreeSize();
 
+    FasterConnPool(const FasterConnPool& rhs) = delete;
+    FasterConnPool& operator=(const FasterConnPool& rhs) = delete;
 
-struct faster_tcp_conn_pool_t {
-	std::list<faster_tcp_conn_t*> free_conn;
-	int free_num;
-	faster_tcp_conn_pool_t() : free_num(0) {}
-
-	void init_conn_pool(int conn_num) {
-		for (int i = 0; i < conn_num; i++) {
-			faster_tcp_conn_t* pconn = new faster_tcp_conn_t();
-			free_conn.push_back(pconn);
-			free_num++;
-		}
-	}
-	faster_tcp_conn_t* get_one_free_conn() {
-		faster_tcp_conn_t* pconn = free_conn.front();
-		free_conn.pop_front();
-		free_num--;
-		return pconn;
-	}
-	void recyle_one_conn(faster_tcp_conn_t* pconn) {
-		free_conn.push_back(pconn);
-		free_num++;
-	}
+private:
+	std::list<faster_conn_t*> _freeConnQue;
+	int _freeConnQueSize;
+	std::list<faster_conn_t*> _usedConnQue;
+	int _usedConnQueSize;
+	std::unordered_map<faster_conn_t*, std::list<faster_conn_t*>::iterator> _addrToIter;
 };
 
 

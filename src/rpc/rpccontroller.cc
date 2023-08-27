@@ -1,34 +1,36 @@
 #include "mprpccontroller.h"
 
-MprpcController::MprpcController()
+FasterRpcController::MprpcController()
 {
     m_failed = false;
     m_errText = "";
 }
 
-void MprpcController::Reset()
+void FasterRpcController::Reset()
 {
     m_failed = false;
     m_errText = "";
 }
 
-bool MprpcController::Failed() const
+bool FasterRpcController::Failed() const
 {
     return m_failed;
 }
 
-std::string MprpcController::ErrorText() const
+std::string FasterRpcController::ErrorText() const
 {
     return m_errText;
 }
 
-void MprpcController::SetFailed(const std::string& reason)
+void FasterRpcController::SetFailed(const std::string& reason)
 {
     m_failed = true;
     m_errText = reason;
 }
 
 // 目前未实现具体的功能
-void MprpcController::StartCancel(){}
-bool MprpcController::IsCanceled() const {return false;}
-void MprpcController::NotifyOnCancel(google::protobuf::Closure* callback) {}
+void FasterRpcController::StartCancel(){}
+bool FasterRpcController::IsCanceled() const {return false;}
+void FasterRpcController::NotifyOnCancel(google::protobuf::Closure* callback) {}
+
+
