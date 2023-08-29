@@ -4,10 +4,6 @@
 using namespace std;
 
 
-
-
-
-
 int main() {
 
     char x[1024] = {'h', 'e', 'l'};

@@ -1,0 +1,3 @@
+/home/zm22/faster-im/client/build/CMakeFiles/imclient.dir
+/home/zm22/faster-im/client/build/CMakeFiles/edit_cache.dir
+/home/zm22/faster-im/client/build/CMakeFiles/rebuild_cache.dir

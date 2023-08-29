@@ -116,6 +116,19 @@ depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+#=============================================================================
+# Target rules for targets named userserver
+
+# Build rule for target.
+userserver: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 userserver
+.PHONY : userserver
+
+# fast build rule for target.
+userserver/fast:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/build
+.PHONY : userserver/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -124,6 +137,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... userserver"
 .PHONY : help
 
 

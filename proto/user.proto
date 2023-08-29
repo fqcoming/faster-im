@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+package faster;
+option cc_generic_services = true;
+
+// protoc user.proto --cpp_out=./
+
+message ResultCode
+{
+    int32 errcode = 1; 
+    bytes errmsg = 2;
+}
+
+// 1.登录
+
+message LoginRequest
+{
+    uint64 userid = 1;
+    bytes pwd = 2;
+}
+
+message LoginResponse
+{
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+// 2.注册
+
+message RegisterRequest
+{
+    bytes name = 1;
+    bytes pwd = 2;
+}
+
+message RegisterResponse
+{
+    uint64 userid = 1;
+    ResultCode result = 2;
+    bool success = 3;
+}
+
+// 3.注销
+
+message LogoutRequest 
+{
+    uint64 userid = 1;
+}
+
+message LogoutResponse
+{
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+// 4.一对一聊天(支持和朋友聊天)
+
+message OneChatRequest 
+{
+    uint64 userid = 1;
+    bytes username = 2;
+    uint64 friendid = 3;
+    bytes msg = 4;
+}
+
+
+message OneChatResponse 
+{
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+// 5.添加朋友
+
+message AddFriendRequest
+{
+    uint64 userid = 1;
+    uint64 friendid = 2;
+}
+
+
+message AddFriendResponse
+{
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+// 6.创建群组
+
+message CreateGroupRequest
+{
+    uint64 userid = 1;
+    bytes groupname = 2;
+    bytes groupdesc = 3;
+}
+
+
+message CreateGroupResponse
+{
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+// 7.加入群组
+
+message AddGroupRequest
+{
+    uint64 userid = 1;
+    uint64 groupid = 2;
+}
+
+
+message AddGroupResponse
+{
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+// 8.群组聊天
+
+message GroupChatRequest
+{
+    uint64 userid = 1;
+    uint64 groupid = 2;
+    bytes msg = 3;
+}
+
+
+message GroupChatResponse
+{
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+
+// 用户聊天管理服务
+
+service UserServiceRpc
+{
+    rpc Login(LoginRequest) returns(LoginResponse);
+    rpc Register(RegisterRequest) returns(RegisterResponse);
+    rpc Logout(LogoutRequest) returns(LogoutResponse);
+
+    rpc OneChat(OneChatRequest) returns(OneChatResponse);
+    rpc AddFriend(AddFriendRequest) returns(AddFriendResponse);
+
+    rpc CreateGroup(CreateGroupRequest) returns(CreateGroupResponse);
+    rpc AddGroup(AddGroupRequest) returns(AddGroupResponse);
+    rpc GroupChat(GroupChatRequest) returns(GroupChatResponse);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -116,6 +116,452 @@ depend:
 	cd /home/zm22/faster-im/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+# Convenience name for target.
+src/CMakeFiles/userserver.dir/rule:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/userserver.dir/rule
+.PHONY : src/CMakeFiles/userserver.dir/rule
+
+# Convenience name for target.
+userserver: src/CMakeFiles/userserver.dir/rule
+.PHONY : userserver
+
+# fast build rule for target.
+userserver/fast:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/build
+.PHONY : userserver/fast
+
+db/db.o: db/db.cc.o
+.PHONY : db/db.o
+
+# target to build an object file
+db/db.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/db/db.cc.o
+.PHONY : db/db.cc.o
+
+db/db.i: db/db.cc.i
+.PHONY : db/db.i
+
+# target to preprocess a source file
+db/db.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/db/db.cc.i
+.PHONY : db/db.cc.i
+
+db/db.s: db/db.cc.s
+.PHONY : db/db.s
+
+# target to generate assembly for a file
+db/db.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/db/db.cc.s
+.PHONY : db/db.cc.s
+
+faster_connpool.o: faster_connpool.cc.o
+.PHONY : faster_connpool.o
+
+# target to build an object file
+faster_connpool.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_connpool.cc.o
+.PHONY : faster_connpool.cc.o
+
+faster_connpool.i: faster_connpool.cc.i
+.PHONY : faster_connpool.i
+
+# target to preprocess a source file
+faster_connpool.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_connpool.cc.i
+.PHONY : faster_connpool.cc.i
+
+faster_connpool.s: faster_connpool.cc.s
+.PHONY : faster_connpool.s
+
+# target to generate assembly for a file
+faster_connpool.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_connpool.cc.s
+.PHONY : faster_connpool.cc.s
+
+faster_eventpool.o: faster_eventpool.cc.o
+.PHONY : faster_eventpool.o
+
+# target to build an object file
+faster_eventpool.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_eventpool.cc.o
+.PHONY : faster_eventpool.cc.o
+
+faster_eventpool.i: faster_eventpool.cc.i
+.PHONY : faster_eventpool.i
+
+# target to preprocess a source file
+faster_eventpool.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_eventpool.cc.i
+.PHONY : faster_eventpool.cc.i
+
+faster_eventpool.s: faster_eventpool.cc.s
+.PHONY : faster_eventpool.s
+
+# target to generate assembly for a file
+faster_eventpool.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_eventpool.cc.s
+.PHONY : faster_eventpool.cc.s
+
+faster_tcpserver.o: faster_tcpserver.cc.o
+.PHONY : faster_tcpserver.o
+
+# target to build an object file
+faster_tcpserver.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_tcpserver.cc.o
+.PHONY : faster_tcpserver.cc.o
+
+faster_tcpserver.i: faster_tcpserver.cc.i
+.PHONY : faster_tcpserver.i
+
+# target to preprocess a source file
+faster_tcpserver.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_tcpserver.cc.i
+.PHONY : faster_tcpserver.cc.i
+
+faster_tcpserver.s: faster_tcpserver.cc.s
+.PHONY : faster_tcpserver.s
+
+# target to generate assembly for a file
+faster_tcpserver.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_tcpserver.cc.s
+.PHONY : faster_tcpserver.cc.s
+
+faster_threadpool.o: faster_threadpool.cc.o
+.PHONY : faster_threadpool.o
+
+# target to build an object file
+faster_threadpool.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_threadpool.cc.o
+.PHONY : faster_threadpool.cc.o
+
+faster_threadpool.i: faster_threadpool.cc.i
+.PHONY : faster_threadpool.i
+
+# target to preprocess a source file
+faster_threadpool.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_threadpool.cc.i
+.PHONY : faster_threadpool.cc.i
+
+faster_threadpool.s: faster_threadpool.cc.s
+.PHONY : faster_threadpool.s
+
+# target to generate assembly for a file
+faster_threadpool.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/faster_threadpool.cc.s
+.PHONY : faster_threadpool.cc.s
+
+model/friendmodel.o: model/friendmodel.cc.o
+.PHONY : model/friendmodel.o
+
+# target to build an object file
+model/friendmodel.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/friendmodel.cc.o
+.PHONY : model/friendmodel.cc.o
+
+model/friendmodel.i: model/friendmodel.cc.i
+.PHONY : model/friendmodel.i
+
+# target to preprocess a source file
+model/friendmodel.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/friendmodel.cc.i
+.PHONY : model/friendmodel.cc.i
+
+model/friendmodel.s: model/friendmodel.cc.s
+.PHONY : model/friendmodel.s
+
+# target to generate assembly for a file
+model/friendmodel.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/friendmodel.cc.s
+.PHONY : model/friendmodel.cc.s
+
+model/groupmodel.o: model/groupmodel.cc.o
+.PHONY : model/groupmodel.o
+
+# target to build an object file
+model/groupmodel.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/groupmodel.cc.o
+.PHONY : model/groupmodel.cc.o
+
+model/groupmodel.i: model/groupmodel.cc.i
+.PHONY : model/groupmodel.i
+
+# target to preprocess a source file
+model/groupmodel.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/groupmodel.cc.i
+.PHONY : model/groupmodel.cc.i
+
+model/groupmodel.s: model/groupmodel.cc.s
+.PHONY : model/groupmodel.s
+
+# target to generate assembly for a file
+model/groupmodel.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/groupmodel.cc.s
+.PHONY : model/groupmodel.cc.s
+
+model/offlinemessagemodel.o: model/offlinemessagemodel.cc.o
+.PHONY : model/offlinemessagemodel.o
+
+# target to build an object file
+model/offlinemessagemodel.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/offlinemessagemodel.cc.o
+.PHONY : model/offlinemessagemodel.cc.o
+
+model/offlinemessagemodel.i: model/offlinemessagemodel.cc.i
+.PHONY : model/offlinemessagemodel.i
+
+# target to preprocess a source file
+model/offlinemessagemodel.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/offlinemessagemodel.cc.i
+.PHONY : model/offlinemessagemodel.cc.i
+
+model/offlinemessagemodel.s: model/offlinemessagemodel.cc.s
+.PHONY : model/offlinemessagemodel.s
+
+# target to generate assembly for a file
+model/offlinemessagemodel.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/offlinemessagemodel.cc.s
+.PHONY : model/offlinemessagemodel.cc.s
+
+model/usermodel.o: model/usermodel.cc.o
+.PHONY : model/usermodel.o
+
+# target to build an object file
+model/usermodel.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/usermodel.cc.o
+.PHONY : model/usermodel.cc.o
+
+model/usermodel.i: model/usermodel.cc.i
+.PHONY : model/usermodel.i
+
+# target to preprocess a source file
+model/usermodel.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/usermodel.cc.i
+.PHONY : model/usermodel.cc.i
+
+model/usermodel.s: model/usermodel.cc.s
+.PHONY : model/usermodel.s
+
+# target to generate assembly for a file
+model/usermodel.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/model/usermodel.cc.s
+.PHONY : model/usermodel.cc.s
+
+pb/rpcheader.pb.o: pb/rpcheader.pb.cc.o
+.PHONY : pb/rpcheader.pb.o
+
+# target to build an object file
+pb/rpcheader.pb.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/pb/rpcheader.pb.cc.o
+.PHONY : pb/rpcheader.pb.cc.o
+
+pb/rpcheader.pb.i: pb/rpcheader.pb.cc.i
+.PHONY : pb/rpcheader.pb.i
+
+# target to preprocess a source file
+pb/rpcheader.pb.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/pb/rpcheader.pb.cc.i
+.PHONY : pb/rpcheader.pb.cc.i
+
+pb/rpcheader.pb.s: pb/rpcheader.pb.cc.s
+.PHONY : pb/rpcheader.pb.s
+
+# target to generate assembly for a file
+pb/rpcheader.pb.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/pb/rpcheader.pb.cc.s
+.PHONY : pb/rpcheader.pb.cc.s
+
+pb/user.pb.o: pb/user.pb.cc.o
+.PHONY : pb/user.pb.o
+
+# target to build an object file
+pb/user.pb.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/pb/user.pb.cc.o
+.PHONY : pb/user.pb.cc.o
+
+pb/user.pb.i: pb/user.pb.cc.i
+.PHONY : pb/user.pb.i
+
+# target to preprocess a source file
+pb/user.pb.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/pb/user.pb.cc.i
+.PHONY : pb/user.pb.cc.i
+
+pb/user.pb.s: pb/user.pb.cc.s
+.PHONY : pb/user.pb.s
+
+# target to generate assembly for a file
+pb/user.pb.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/pb/user.pb.cc.s
+.PHONY : pb/user.pb.cc.s
+
+redis/redis.o: redis/redis.cc.o
+.PHONY : redis/redis.o
+
+# target to build an object file
+redis/redis.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/redis/redis.cc.o
+.PHONY : redis/redis.cc.o
+
+redis/redis.i: redis/redis.cc.i
+.PHONY : redis/redis.i
+
+# target to preprocess a source file
+redis/redis.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/redis/redis.cc.i
+.PHONY : redis/redis.cc.i
+
+redis/redis.s: redis/redis.cc.s
+.PHONY : redis/redis.s
+
+# target to generate assembly for a file
+redis/redis.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/redis/redis.cc.s
+.PHONY : redis/redis.cc.s
+
+rpcchannel.o: rpcchannel.cc.o
+.PHONY : rpcchannel.o
+
+# target to build an object file
+rpcchannel.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/rpcchannel.cc.o
+.PHONY : rpcchannel.cc.o
+
+rpcchannel.i: rpcchannel.cc.i
+.PHONY : rpcchannel.i
+
+# target to preprocess a source file
+rpcchannel.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/rpcchannel.cc.i
+.PHONY : rpcchannel.cc.i
+
+rpcchannel.s: rpcchannel.cc.s
+.PHONY : rpcchannel.s
+
+# target to generate assembly for a file
+rpcchannel.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/rpcchannel.cc.s
+.PHONY : rpcchannel.cc.s
+
+rpccontroller.o: rpccontroller.cc.o
+.PHONY : rpccontroller.o
+
+# target to build an object file
+rpccontroller.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/rpccontroller.cc.o
+.PHONY : rpccontroller.cc.o
+
+rpccontroller.i: rpccontroller.cc.i
+.PHONY : rpccontroller.i
+
+# target to preprocess a source file
+rpccontroller.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/rpccontroller.cc.i
+.PHONY : rpccontroller.cc.i
+
+rpccontroller.s: rpccontroller.cc.s
+.PHONY : rpccontroller.s
+
+# target to generate assembly for a file
+rpccontroller.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/rpccontroller.cc.s
+.PHONY : rpccontroller.cc.s
+
+rpcprovider.o: rpcprovider.cc.o
+.PHONY : rpcprovider.o
+
+# target to build an object file
+rpcprovider.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/rpcprovider.cc.o
+.PHONY : rpcprovider.cc.o
+
+rpcprovider.i: rpcprovider.cc.i
+.PHONY : rpcprovider.i
+
+# target to preprocess a source file
+rpcprovider.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/rpcprovider.cc.i
+.PHONY : rpcprovider.cc.i
+
+rpcprovider.s: rpcprovider.cc.s
+.PHONY : rpcprovider.s
+
+# target to generate assembly for a file
+rpcprovider.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/rpcprovider.cc.s
+.PHONY : rpcprovider.cc.s
+
+userserver.o: userserver.cc.o
+.PHONY : userserver.o
+
+# target to build an object file
+userserver.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/userserver.cc.o
+.PHONY : userserver.cc.o
+
+userserver.i: userserver.cc.i
+.PHONY : userserver.i
+
+# target to preprocess a source file
+userserver.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/userserver.cc.i
+.PHONY : userserver.cc.i
+
+userserver.s: userserver.cc.s
+.PHONY : userserver.s
+
+# target to generate assembly for a file
+userserver.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/userserver.cc.s
+.PHONY : userserver.cc.s
+
+userservice.o: userservice.cc.o
+.PHONY : userservice.o
+
+# target to build an object file
+userservice.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/userservice.cc.o
+.PHONY : userservice.cc.o
+
+userservice.i: userservice.cc.i
+.PHONY : userservice.i
+
+# target to preprocess a source file
+userservice.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/userservice.cc.i
+.PHONY : userservice.cc.i
+
+userservice.s: userservice.cc.s
+.PHONY : userservice.s
+
+# target to generate assembly for a file
+userservice.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/userservice.cc.s
+.PHONY : userservice.cc.s
+
+zk/zookeeperutil.o: zk/zookeeperutil.cc.o
+.PHONY : zk/zookeeperutil.o
+
+# target to build an object file
+zk/zookeeperutil.cc.o:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/zk/zookeeperutil.cc.o
+.PHONY : zk/zookeeperutil.cc.o
+
+zk/zookeeperutil.i: zk/zookeeperutil.cc.i
+.PHONY : zk/zookeeperutil.i
+
+# target to preprocess a source file
+zk/zookeeperutil.cc.i:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/zk/zookeeperutil.cc.i
+.PHONY : zk/zookeeperutil.cc.i
+
+zk/zookeeperutil.s: zk/zookeeperutil.cc.s
+.PHONY : zk/zookeeperutil.s
+
+# target to generate assembly for a file
+zk/zookeeperutil.cc.s:
+	cd /home/zm22/faster-im/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/userserver.dir/build.make src/CMakeFiles/userserver.dir/zk/zookeeperutil.cc.s
+.PHONY : zk/zookeeperutil.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -124,6 +570,61 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... userserver"
+	@echo "... db/db.o"
+	@echo "... db/db.i"
+	@echo "... db/db.s"
+	@echo "... faster_connpool.o"
+	@echo "... faster_connpool.i"
+	@echo "... faster_connpool.s"
+	@echo "... faster_eventpool.o"
+	@echo "... faster_eventpool.i"
+	@echo "... faster_eventpool.s"
+	@echo "... faster_tcpserver.o"
+	@echo "... faster_tcpserver.i"
+	@echo "... faster_tcpserver.s"
+	@echo "... faster_threadpool.o"
+	@echo "... faster_threadpool.i"
+	@echo "... faster_threadpool.s"
+	@echo "... model/friendmodel.o"
+	@echo "... model/friendmodel.i"
+	@echo "... model/friendmodel.s"
+	@echo "... model/groupmodel.o"
+	@echo "... model/groupmodel.i"
+	@echo "... model/groupmodel.s"
+	@echo "... model/offlinemessagemodel.o"
+	@echo "... model/offlinemessagemodel.i"
+	@echo "... model/offlinemessagemodel.s"
+	@echo "... model/usermodel.o"
+	@echo "... model/usermodel.i"
+	@echo "... model/usermodel.s"
+	@echo "... pb/rpcheader.pb.o"
+	@echo "... pb/rpcheader.pb.i"
+	@echo "... pb/rpcheader.pb.s"
+	@echo "... pb/user.pb.o"
+	@echo "... pb/user.pb.i"
+	@echo "... pb/user.pb.s"
+	@echo "... redis/redis.o"
+	@echo "... redis/redis.i"
+	@echo "... redis/redis.s"
+	@echo "... rpcchannel.o"
+	@echo "... rpcchannel.i"
+	@echo "... rpcchannel.s"
+	@echo "... rpccontroller.o"
+	@echo "... rpccontroller.i"
+	@echo "... rpccontroller.s"
+	@echo "... rpcprovider.o"
+	@echo "... rpcprovider.i"
+	@echo "... rpcprovider.s"
+	@echo "... userserver.o"
+	@echo "... userserver.i"
+	@echo "... userserver.s"
+	@echo "... userservice.o"
+	@echo "... userservice.i"
+	@echo "... userservice.s"
+	@echo "... zk/zookeeperutil.o"
+	@echo "... zk/zookeeperutil.i"
+	@echo "... zk/zookeeperutil.s"
 .PHONY : help
 
 

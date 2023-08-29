@@ -11,8 +11,8 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 # Set the search path for project compilation header files: -I
-include_directories(${PROJECT_SOURCE_DIR}/src/include)
-include_directories(${PROJECT_SOURCE_DIR}/example)
+include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include/pb)
 
 # Set the search path for project library files: -L
 link_directories(${PROJECT_SOURCE_DIR}/lib)
